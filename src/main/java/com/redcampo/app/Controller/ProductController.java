@@ -1,7 +1,7 @@
 package com.redcampo.app.Controller;
 
-import com.redcampo.app.Entity.User;
-import com.redcampo.app.Service.UserService;
+import com.redcampo.app.Entity.Product;
+import com.redcampo.app.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,38 +11,39 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/apiuser")
-public class UserController {
-    private final UserService usCon;
+@RequestMapping("/apiproduct")
+public class ProductController {
+    private final ProductService prCon;
 
-    @GetMapping
+    @GetMapping()
     public String msg(){
-        return "USERS AVAIABLE";
+        return "PRODUCTS AVAIABLE";
     }
 
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok(usCon.findAll());
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> findAll(){
+        return ResponseEntity.ok(prCon.findAll());
     }
 
     @PostMapping(path ="/insertdata", consumes = "application/json")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
-        List<User> users = usCon.findByUserId(user.getUserId());
+    public ResponseEntity<String> createUser(@RequestBody Product product) {
+        List<Product> users = prCon.findByProductId(product.getProductId());
         if (users.isEmpty()){
-            usCon.create(user);
+            prCon.create(product);
             return new ResponseEntity<>("CREATED", HttpStatus.ACCEPTED);
         }else {
-            User empty = new User();
+            Product empty = new Product();
             return new ResponseEntity<>("DUPLICATED", HttpStatus.BAD_REQUEST);
         }
     }
 
+
     @DeleteMapping("/deletedata/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(value = "id") Long id) {
-        List<User> users = usCon.findByUserId(id);
-        if(!users.isEmpty()) {
-            for (int i = 0; i < users.size(); i++) {
-                usCon.delete(users.get(i));
+        List<Product> products = prCon.findByProductId(id);
+        if(!products.isEmpty()) {
+            for (int i = 0; i < products.size(); i++) {
+                prCon.delete(products.get(i));
             }
             return new ResponseEntity<>("DELETED", HttpStatus.ACCEPTED);
         }else{
