@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +17,7 @@ public class UserController {
 
     @GetMapping("/hola")
     public String hola(){
-        return "Estoy conectado wiiii";
+        return "Estoy conectado.";
     }
 
     @GetMapping("/users")
@@ -27,14 +25,28 @@ public class UserController {
         return ResponseEntity.ok(usCon.findAll());
     }
 
-    @PostMapping("/users")
-    public ResponseEntity create(@Valid @RequestBody User temp){
-        List<User> pair = usCon.findByUserId(temp.getUserId());
-        if (pair.isEmpty()){
-            usCon.create(temp);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("ACEPTED");
+    @PostMapping(path ="/insertdata", consumes = "application/json")
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        List<User> users = usCon.findByUserId(user.getUserId());
+        if (users.isEmpty()){
+            usCon.create(user);
+            return new ResponseEntity<>("CREATED", HttpStatus.OK);
+        }else {
+            User empty = new User();
+            return new ResponseEntity<>("DUPLICATED", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/deletedata/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable(value = "id") Long id) {
+        List<User> users = usCon.findByUserId(id);
+        if(!users.isEmpty()) {
+            for (int i = 0; i < users.size(); i++) {
+                usCon.delete(users.get(i));
+            }
+            return new ResponseEntity<>("DELETED", HttpStatus.OK);
         }else{
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("DENIED");
+            return new ResponseEntity<>("EMPTY", HttpStatus.BAD_REQUEST);
         }
     }
 }
