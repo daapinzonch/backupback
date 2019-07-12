@@ -2,7 +2,6 @@ package com.redcampo.app.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
@@ -30,6 +30,9 @@ public class User implements Serializable {
 
     @NotBlank
     private String secondName;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Deal> deals;
 
     public long getId() {
         return Id;
@@ -61,5 +64,13 @@ public class User implements Serializable {
 
     public void setSecondName(String secondName) {
         this.secondName = secondName;
+    }
+
+    public List<Deal> getOrders() {
+        return deals;
+    }
+
+    public void setOrders(List<Deal> orders) {
+        this.deals = orders;
     }
 }

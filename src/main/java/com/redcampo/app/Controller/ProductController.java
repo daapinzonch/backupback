@@ -30,10 +30,10 @@ public class ProductController {
         List<Product> users = prCon.findByProductId(product.getProductId());
         if (users.isEmpty()){
             prCon.create(product);
-            return new ResponseEntity<>("CREATED", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("PRODUCT CREATED", HttpStatus.ACCEPTED);
         }else {
             Product empty = new Product();
-            return new ResponseEntity<>("DUPLICATED", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("PRODUCT DUPLICATED", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -45,9 +45,9 @@ public class ProductController {
             for (int i = 0; i < products.size(); i++) {
                 prCon.delete(products.get(i));
             }
-            return new ResponseEntity<>("DELETED", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("PRODUCT DELETED", HttpStatus.ACCEPTED);
         }else{
-            return new ResponseEntity<>("EMPTY", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("PRODUCT EMPTY", HttpStatus.BAD_REQUEST);
         }
     }
 }

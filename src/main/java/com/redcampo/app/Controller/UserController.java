@@ -30,10 +30,10 @@ public class UserController {
         List<User> users = usCon.findByUserId(user.getUserId());
         if (users.isEmpty()){
             usCon.create(user);
-            return new ResponseEntity<>("CREATED", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("USER CREATED", HttpStatus.ACCEPTED);
         }else {
             User empty = new User();
-            return new ResponseEntity<>("DUPLICATED", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("USER DUPLICATED", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -44,9 +44,9 @@ public class UserController {
             for (int i = 0; i < users.size(); i++) {
                 usCon.delete(users.get(i));
             }
-            return new ResponseEntity<>("DELETED", HttpStatus.ACCEPTED);
+            return new ResponseEntity<>("USER DELETED", HttpStatus.ACCEPTED);
         }else{
-            return new ResponseEntity<>("EMPTY", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("USER EMPTY", HttpStatus.BAD_REQUEST);
         }
     }
 }

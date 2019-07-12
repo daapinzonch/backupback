@@ -8,6 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "Product")
@@ -15,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @JsonIgnoreProperties(allowGetters = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,11 +25,14 @@ public class Product {
     @NonNull
     private long productId;
 
+    @NonNull
+    private long productPrice;
+
     @NotBlank
     private String productName;
 
-    @NonNull
-    private long productPrice;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Deal> deals;
 
     public long getId() {
         return id;
@@ -45,6 +50,14 @@ public class Product {
         this.productId = productId;
     }
 
+    public long getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(long productPrice) {
+        this.productPrice = productPrice;
+    }
+
     public String getProductName() {
         return productName;
     }
@@ -53,11 +66,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public float getProductPrice() {
-        return productPrice;
+    public List<Deal> getDeals() {
+        return deals;
     }
 
-    public void setProductPrice(long productPrice) {
-        this.productPrice = productPrice;
+    public void setDeals(List<Deal> deals) {
+        this.deals = deals;
     }
 }
