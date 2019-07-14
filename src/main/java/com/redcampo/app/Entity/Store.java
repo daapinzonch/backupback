@@ -12,58 +12,58 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "Store")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(allowGetters = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product implements Serializable {
+public class Store implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
     @NonNull
-    private Long productId;
-
-    @NonNull
-    private Long productPrice;
+    private Long storeId;
 
     @NotBlank
-    private String productName;
+    private String firtsName;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @NotBlank
+    private String lastName;
+
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Deal> deals;
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        Id = id;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Long getStoreId() {
+        return storeId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setStoreId(Long storeId) {
+        this.storeId = storeId;
     }
 
-    public Long getProductPrice() {
-        return productPrice;
+    public String getFirtsName() {
+        return firtsName;
     }
 
-    public void setProductPrice(Long productPrice) {
-        this.productPrice = productPrice;
+    public void setFirtsName(String firtsName) {
+        this.firtsName = firtsName;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Deal> getDeals() {

@@ -13,17 +13,23 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepo.findAll();
     }
 
-    public List<Product> findByProductId(Long id){
-        return productRepo.findByProductId(id);
+    public Product getProduct(Long id) {
+        return productRepo.getByProductId(id);
     }
 
-    public Product create(Product pro){
-        return productRepo.save(pro);
+    public Product create(Product product) {
+        return productRepo.save(product);
     }
 
-    public void delete(Product pro) { productRepo.delete(pro); }
+    public Long countProduct(Long id) {
+        return productRepo.countByProductId(id);
+    }
+
+    public void delete(Product product) {
+        productRepo.delete(product);
+    }
 }

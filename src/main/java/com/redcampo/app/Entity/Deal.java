@@ -3,7 +3,6 @@ package com.redcampo.app.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -18,41 +17,41 @@ import java.io.Serializable;
 public class Deal implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long Id;
+    private Long Id;
 
-    private long dealQuantity;
+    private Long dealQuantity;
 
-    private long dealPrice;
+    private Long dealPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "productId")
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "storeId")
+    private Store store;
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         Id = id;
     }
 
-    public long getDealQuantity() {
+    public Long getDealQuantity() {
         return dealQuantity;
     }
 
-    public void setDealQuantity(long dealQuantity) {
+    public void setDealQuantity(Long dealQuantity) {
         this.dealQuantity = dealQuantity;
     }
 
-    public long getDealPrice() {
+    public Long getDealPrice() {
         return dealPrice;
     }
 
-    public void setDealPrice(long dealPrice) {
+    public void setDealPrice(Long dealPrice) {
         this.dealPrice = dealPrice;
     }
 
@@ -64,12 +63,12 @@ public class Deal implements Serializable {
         this.product = product;
     }
 
-    public User getUser() {
-        return user;
+    public Store getStore() {
+        return store;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setStore(Store store) {
+        this.store = store;
     }
 }
 

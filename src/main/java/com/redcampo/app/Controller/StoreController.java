@@ -1,7 +1,7 @@
 package com.redcampo.app.Controller;
 
-import com.redcampo.app.Entity.Product;
-import com.redcampo.app.Service.ProductService;
+import com.redcampo.app.Entity.Store;
+import com.redcampo.app.Service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,26 +11,26 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/apiproduct")
-public class ProductController {
-    private final ProductService prCon;
+@RequestMapping("/apistores")
+public class StoreController {
+    private final StoreService stCon;
 
     @GetMapping
     public String msg(){
-        return "product AVAIABLE";
+        return "STORE AVAIABLE";
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<List<Product>> findAll(){
-        return ResponseEntity.ok(prCon.findAll());
+    @GetMapping("/stores")
+    public ResponseEntity<List<Store>> findAll(){
+        return ResponseEntity.ok(stCon.findAll());
     }
 
     @PostMapping(path ="/insertdata", consumes = "application/json")
-    public ResponseEntity<Long> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Long> createStore(@RequestBody Store store) {
         try{
-            Long count=prCon.countProduct(product.getProductId());
+            Long count=stCon.countStores(store.getStoreId());
             if (count==0) {
-                prCon.create(product);
+                stCon.create(store);
                 return new ResponseEntity<>(count, HttpStatus.CREATED);
             }else {
                 return new ResponseEntity<>(count,HttpStatus.BAD_REQUEST);
@@ -41,11 +41,11 @@ public class ProductController {
     }
 
     @DeleteMapping("/deletedata/{id}")
-    public ResponseEntity<Long> deleteProduct(@PathVariable(value = "id") Long id) {
-        Long count = prCon.countProduct(id);
+    public ResponseEntity<Long> deleteStore(@PathVariable(value = "id") Long id) {
+        Long count = stCon.countStores(id);
         try{
             if (count==1) {
-                prCon.delete(prCon.getProduct(id));
+                stCon.delete(stCon.getStore(id));
                 return new ResponseEntity<>(count, HttpStatus.ACCEPTED);
             }else {
                 return new ResponseEntity<>(count, HttpStatus.BAD_REQUEST);
