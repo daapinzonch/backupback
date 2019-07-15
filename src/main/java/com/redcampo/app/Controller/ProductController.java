@@ -3,6 +3,7 @@ package com.redcampo.app.Controller;
 import com.redcampo.app.Entity.Product;
 import com.redcampo.app.Service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,15 +14,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/apiproduct")
 public class ProductController {
+    @Autowired
     private final ProductService prCon;
 
     @GetMapping
-    public String msg(){
-        return "product AVAIABLE";
-    }
+    public String msg(){ return "PRODUCT AVAIABLE"; }
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> findAll(){
+    public ResponseEntity<List<Product>> allProducts(){
         return ResponseEntity.ok(prCon.findAll());
     }
 

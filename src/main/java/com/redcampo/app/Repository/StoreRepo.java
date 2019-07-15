@@ -8,7 +8,7 @@ import java.util.List;
 public interface StoreRepo extends JpaRepository<Store, Long> {
     public List<Store> findAll();
 
-    public Store getByStoreId(Long id);
+    public Store findByStoreId(Long id);
 
     public Long countByStoreId(Long id);
 }

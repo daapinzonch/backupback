@@ -3,6 +3,7 @@ package com.redcampo.app.Controller;
 import com.redcampo.app.Entity.Store;
 import com.redcampo.app.Service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/apistores")
 public class StoreController {
+    @Autowired
     private final StoreService stCon;
 
     @GetMapping
@@ -21,7 +23,7 @@ public class StoreController {
     }
 
     @GetMapping("/stores")
-    public ResponseEntity<List<Store>> findAll(){
+    public ResponseEntity<List<Store>> allStores(){
         return ResponseEntity.ok(stCon.findAll());
     }
 

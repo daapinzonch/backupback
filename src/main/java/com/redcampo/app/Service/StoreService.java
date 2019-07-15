@@ -17,7 +17,7 @@ public class StoreService {
         return storeRepo.findAll();
     }
 
-    public Store getStore(Long id){ return storeRepo.getByStoreId(id); }
+    public Store getStore(Long id){ return storeRepo.findByStoreId(id); }
 
     public Store create(Store store){
         return storeRepo.save(store);

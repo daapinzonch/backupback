@@ -1,5 +1,6 @@
 package com.redcampo.app.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,8 +33,9 @@ public class Store implements Serializable {
     @NotBlank
     private String lastName;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<Deal> deals;
+    @OneToMany(mappedBy = "store",fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+    @JsonBackReference(value="store-deal")
+    private List<Deal> deals = new ArrayList<>();
 
     public Long getId() {
         return Id;

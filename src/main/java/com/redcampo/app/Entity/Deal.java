@@ -1,5 +1,6 @@
 package com.redcampo.app.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -19,17 +20,21 @@ public class Deal implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    private Long dealId;
+
     private Long dealQuantity;
 
     private Long dealPrice;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productId")
-    private Product product;
+    private boolean dealStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeId")
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JsonBackReference(value="prod-deal")
     private Store store;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @JsonBackReference(value="store-deal")
+    private Product product;
 
     public Long getId() {
         return Id;
@@ -37,6 +42,14 @@ public class Deal implements Serializable {
 
     public void setId(Long id) {
         Id = id;
+    }
+
+    public Long getDealId() {
+        return dealId;
+    }
+
+    public void setDealId(Long dealId) {
+        this.dealId = dealId;
     }
 
     public Long getDealQuantity() {
@@ -53,6 +66,14 @@ public class Deal implements Serializable {
 
     public void setDealPrice(Long dealPrice) {
         this.dealPrice = dealPrice;
+    }
+
+    public boolean isStatus() {
+        return dealStatus;
+    }
+
+    public void setStatus(boolean status) {
+        this.dealStatus = status;
     }
 
     public Product getProduct() {

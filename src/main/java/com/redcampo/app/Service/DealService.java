@@ -16,6 +16,12 @@ public class DealService {
         return dealRepo.findAll();
     }
 
+    public List<Deal> statusList(boolean st) { return dealRepo.findByDealStatus(st); }
+
+    public List<Deal> dealIdList(Long id) { return dealRepo.findByDealId(id); }
+
+    public Deal getDeal(Long id) { return dealRepo.getByDealId(id); }
+
     public Deal create(Deal de){
         return dealRepo.save(de);
     }

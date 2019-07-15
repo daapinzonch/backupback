@@ -13,13 +13,9 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    public List<Product> findAll() {
-        return productRepo.findAll();
-    }
+    public List<Product> findAll() { return productRepo.findAll(); }
 
-    public Product getProduct(Long id) {
-        return productRepo.getByProductId(id);
-    }
+    public Product getProduct(Long id) { return productRepo.findByProductId(id); }
 
     public Product create(Product product) {
         return productRepo.save(product);
